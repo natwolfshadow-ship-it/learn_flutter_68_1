@@ -5,15 +5,60 @@ class Home extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children:  [
-        Image.asset('assets/images/cat.png', width: 200, height: 200,),
-        SizedBox(height: 20),
-        Image.network('https://pixabay.com/th/images/download/xsimb-cat-8612685_1920.jpg', width: 200, height: 200,),
-        
-      ],
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          TextButton(
+            style:TextButton.styleFrom(foregroundColor: Colors.pinkAccent),
+            onPressed: () {
+              print('Pressed TextButton');
+            },
+            child: Text(
+              'Click Me',
+              style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
+            ),
+          ),
+          SizedBox(height: 20),
+          FilledButton(
+            style: FilledButton.styleFrom(backgroundColor: Colors.greenAccent),
+            onPressed: () {
+              print('Pressed FilledButton');
+            },
+            child: Text(
+              'Click Me',
+              style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
+            ),
+          ),
+          SizedBox(height: 20),
+          OutlinedButton(
+            style: OutlinedButton.styleFrom(
+              foregroundColor: Colors.blueAccent,
+              side: BorderSide(color: Colors.blueAccent, width: 2),
+            ),
+            onPressed: () {
+              print('Pressed OutlinedButton');
+            },
+            child: Text(
+              'Click Me',
+              style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
+            ),
+          ),
+          SizedBox(height: 20),
+          ElevatedButton(
+            style: ElevatedButton.styleFrom(backgroundColor: Colors.orangeAccent),
+            onPressed: () {
+              print('Pressed ElevatedButton');
+            },
+            child: Text(
+              'Click Me',
+              style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
+            ),
+          )
+        ],
+      ),
+     
+      
     );
   }
 }
