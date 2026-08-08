@@ -5,49 +5,14 @@ class Home extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.start,
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children:  [
-        Container (
-          color: Colors.redAccent,
-          padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 5),
-          child: const Text(
-            'Hello World',
-            style: TextStyle(
-              fontSize: 20,
-              color: Colors.white,
-              fontWeight: FontWeight.bold,
-              letterSpacing: 3,
-            )
-          ),
-        ),
-         Container (
-          color: Colors.greenAccent,
-          padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 5),
-          child: const Text(
-            'Hello World',
-            style: TextStyle(
-              fontSize: 20,
-              color: Colors.white,
-              fontWeight: FontWeight.bold,
-              letterSpacing: 3,
-            )
-          ),
-        ),
-        Container (
-          color: Colors.blueAccent,
-          padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 5),
-          child: const Text(
-            'Hello World',
-            style: TextStyle(
-              fontSize: 20,
-              color: Colors.white,
-              fontWeight: FontWeight.bold,
-              letterSpacing: 3,
-            )
-          ),
-        ),
+        Image.asset('assets/images/cat.png', width: 200, height: 200,),
+        SizedBox(height: 20),
+        Image.network('https://pixabay.com/th/images/download/xsimb-cat-8612685_1920.jpg', width: 200, height: 200,),
+        
       ],
     );
   }
