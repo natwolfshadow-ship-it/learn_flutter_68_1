@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:learn_flutter_68_1/screen/Home.dart';
+//import 'package:learn_flutter_68_1/screen/Home.dart';
+import 'package:learn_flutter_68_1/screen/item.dart';
 
 void main() {
   //const app = MaterialApp(title: 'My App', home: Text('Hello World'));
@@ -12,7 +13,7 @@ void main() {
           backgroundColor: Colors.green,
           centerTitle: true,
         ),
-        body: Home(),
+        body: Item(),
       ),
     )
   );
