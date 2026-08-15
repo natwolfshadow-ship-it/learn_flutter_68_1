@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:learn_flutter_68_1/model/person.dart';
 
 class Item extends StatefulWidget {
   const Item({super.key});
@@ -8,18 +9,10 @@ class Item extends StatefulWidget {
 }
 
 class _ItemState extends State<Item> {
-  List<String> data = [
-    'Item 1',
-    'Item 2',
-    'Item 3',
-    'Item 4',
-    'Item 5',
-  ];
-
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
-      itemCount: data.length,
+      itemCount: people.length,
       itemBuilder: (context, index) {
         return Container(
           decoration: BoxDecoration(
@@ -28,11 +21,44 @@ class _ItemState extends State<Item> {
             ),
             borderRadius: BorderRadius.circular(10),
           ),
-          margin: const EdgeInsets.symmetric(vertical: 5,horizontal: 5,),
+          margin: const EdgeInsets.symmetric(
+            vertical: 5,
+            horizontal: 5,
+          ),
           padding: const EdgeInsets.all(10),
-          child: Text(
-            data[index],
-            style: const TextStyle(fontSize: 20,fontWeight: FontWeight.bold,),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    people[index].name,
+                    style: const TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  Text(
+                    'อายุ: ${people[index].age} ปี',
+                    style: const TextStyle(
+                      fontSize: 16,
+                    ),
+                  ),
+                  Text(
+                    'อาชีพ: ${people[index].job}',
+                    style: const TextStyle(
+                      fontSize: 16,
+                    ),
+                  ),
+                ],
+              ),
+              const Icon(
+                Icons.person,
+                size: 50,
+                color: Colors.blueAccent,
+              ),
+            ],
           ),
         );
       },
