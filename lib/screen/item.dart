@@ -8,48 +8,34 @@ class Item extends StatefulWidget {
 }
 
 class _ItemState extends State<Item> {
-  int quantity = 10;
+  List<String> data = [
+    'Item 1',
+    'Item 2',
+    'Item 3',
+    'Item 4',
+    'Item 5',
+  ];
 
-  void incrementQuantity() {
-    setState(() {
-      quantity++;
-    });
-  }
-  void decrementQuantity() {
-    setState(() {
-      if (quantity > 0) {
-        quantity--;
-      }
-    });
-  }
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children:[
-          Text(
-            'Quantity: $quantity',
-            style:const TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
+    return ListView.builder(
+      itemCount: data.length,
+      itemBuilder: (context, index) {
+        return Container(
+          decoration: BoxDecoration(
+            border: Border.all(
+              color: Colors.blueAccent,
+            ),
+            borderRadius: BorderRadius.circular(10),
           ),
-          const SizedBox(height: 20),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              ElevatedButton(
-                onPressed: decrementQuantity,
-                child: const Text('Decrement'),
-              ),
-              const SizedBox(width: 20),
-              ElevatedButton(
-                onPressed: incrementQuantity,
-                child: const Text('Increment',),
-              ),  
-            ],
-          )
-        ],
-      ),
+          margin: const EdgeInsets.symmetric(vertical: 5,horizontal: 5,),
+          padding: const EdgeInsets.all(10),
+          child: Text(
+            data[index],
+            style: const TextStyle(fontSize: 20,fontWeight: FontWeight.bold,),
+          ),
+        );
+      },
     );
-     
   }
 }
