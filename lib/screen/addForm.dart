@@ -17,136 +17,119 @@ class _AddFormState extends State<AddForm> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Add Form',
-      home: Scaffold(
-        appBar: AppBar(
-          title: const Text('Add Person'),
-          backgroundColor: Colors.green,
-          centerTitle: true,
-        ),
-        body: Padding(
-          padding: const EdgeInsets.all(20.0),
-          child: Form(
-            key: _formKey,
-            child: Column(
-              children: [
-                // ช่องกรอกชื่อ
-                TextFormField(
-                  decoration: const InputDecoration(
-                    labelText: 'Name',
-                    border: OutlineInputBorder(),
-                  ),
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Please enter a name';
-                    }
-                    return null;
-                  },
-                  onSaved: (value) {
-                    _name = value ?? '';
-                  },
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Add Person'),
+        backgroundColor: Colors.green,
+        centerTitle: true,
+      ),
+      // ใช้ SingleChildScrollView ป้องกันหน้าจอล้นเมื่อคีย์บอร์ดเด้งขึ้นมา
+      body: SingleChildScrollView(
+        padding: const EdgeInsets.all(20.0),
+        child: Form(
+          key: _formKey,
+          child: Column(
+            children: [
+              // ช่องกรอกชื่อ
+              TextFormField(
+                decoration: const InputDecoration(
+                  labelText: 'Name',
+                  border: OutlineInputBorder(),
                 ),
+                validator: (value) {
+                  if (value == null || value.trim().isEmpty) {
+                    return 'Please enter a name';
+                  }
+                  return null;
+                },
+                onSaved: (value) {
+                  _name = value?.trim() ?? '';
+                },
+              ),
 
-                const SizedBox(height: 15),
+              const SizedBox(height: 15),
 
-                // ช่องกรอกอายุ
-                TextFormField(
-                  decoration: const InputDecoration(
-                    labelText: 'Age',
-                    border: OutlineInputBorder(),
-                  ),
-                  keyboardType: TextInputType.number,
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Please enter an age';
-                    }
-
-                    if (int.tryParse(value) == null) {
-                      return 'Please enter a valid number';
-                    }
-
-                    return null;
-                  },
-                  onSaved: (value) {
-                    _age = int.tryParse(value ?? '') ?? 20;
-                  },
+              // ช่องกรอกอายุ
+              TextFormField(
+                initialValue: _age.toString(), // แสดงค่าเริ่มต้นตามตัวแปร
+                decoration: const InputDecoration(
+                  labelText: 'Age',
+                  border: OutlineInputBorder(),
                 ),
+                keyboardType: TextInputType.number,
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Please enter an age';
+                  }
+                  final parsedAge = int.tryParse(value);
+                  if (parsedAge == null || parsedAge <= 0) {
+                    return 'Please enter a valid age';
+                  }
+                  return null;
+                },
+                onSaved: (value) {
+                  _age = int.tryParse(value ?? '') ?? 30;
+                },
+              ),
 
-                const SizedBox(height: 15),
+              const SizedBox(height: 15),
 
-                // เลือกอาชีพ
-                DropdownButtonFormField<Job>(
-                  value: _job,
-                  decoration: const InputDecoration(
-                    labelText: 'Job',
-                    border: OutlineInputBorder(),
-                  ),
-                  items: Job.values.map((job) {
-                    return DropdownMenuItem<Job>(
-                      value: job,
-                      child: Text(job.title),
-                    );
-                  }).toList(),
-                  onChanged: (value) {
-                    setState(() {
-                      _job = value;
-                    });
-                  },
+              // เลือกอาชีพ
+              DropdownButtonFormField<Job>(
+                value: _job,
+                decoration: const InputDecoration(
+                  labelText: 'Job',
+                  border: OutlineInputBorder(),
                 ),
+                items: Job.values.map((job) {
+                  return DropdownMenuItem<Job>(
+                    value: job,
+                    child: Text(job.title),
+                  );
+                }).toList(),
+                onChanged: (value) {
+                  setState(() {
+                    _job = value;
+                  });
+                },
+              ),
 
-                const SizedBox(height: 20),
+              const SizedBox(height: 25),
 
-                // ปุ่ม Submit
-                FilledButton(
+              // ปุ่ม Submit
+              SizedBox(
+                width: double.infinity,
+                child: FilledButton(
                   onPressed: () {
                     if (_formKey.currentState!.validate()) {
                       _formKey.currentState!.save();
 
                       if (_job != null) {
-                        setState(() {
-                          people.add(
-                            Person(
-                              name: _name,
-                              age: _age,
-                              job: _job!.title,
-                            ),
-                          );
-                        });
-
-                        print(
-                          'Name: $_name, '
-                          'Age: $_age, '
-                          'Job: ${_job!.title}',
+                        final newPerson = Person(
+                          name: _name,
+                          age: _age,
+                          job: _job!.title,
                         );
 
-                        _formKey.currentState!.reset();
-
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(
-                            content: Text('เพิ่มข้อมูลสำเร็จ'),
-                          ),
-                        );
+                        // ส่งข้อมูล newPerson กลับไปยังหน้าก่อนหน้า
+                        Navigator.pop(context, newPerson);
                       }
                     }
                   },
                   style: FilledButton.styleFrom(
                     backgroundColor: Colors.green,
-                    padding: const EdgeInsets.symmetric(
-                      vertical: 10,
-                      horizontal: 50,
-                    ),
+                    padding: const EdgeInsets.symmetric(vertical: 12),
                   ),
                   child: const Text(
                     'Submit',
                     style: TextStyle(
                       color: Colors.white,
-                      fontSize: 20,
+                      fontSize: 18,
                     ),
                   ),
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
         ),
       ),
